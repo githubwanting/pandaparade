@@ -7,7 +7,7 @@ from pandas.api.types import (
     is_object_dtype
 )
 
-st.title('Filter your Airbnb Listings dataframe!'')
+st.title('Filter your Airbnb Listings dataframe!')
 
 st.write(
     """This app is based on this blog [here](https://blog.streamlit.io/auto-generate-a-dataframe-filtering-ui-in-streamlit-with-filter_dataframe/). 
@@ -52,7 +52,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
             # Treat columns with < 10 unique values as categorical
             if is_categorical_dtype(df[column]) or df[column].nunique() < 10:
                 user_cat_input = right.multiselect(
-                    f'Values for {column}'',
+                    f'Values for {column}',
                     df[column].unique(),
                     default=list(df[column].unique()),
                 )
@@ -62,7 +62,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                 _max = float(df[column].max())
                 step = (_max - _min) / 100
                 user_num_input = right.slider(
-                    f'Values for {column}'',
+                    f'Values for {column}',
                     _min,
                     _max,
                     (_min, _max),
@@ -71,7 +71,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                 df = df[df[column].between(*user_num_input)]
             elif is_datetime64_any_dtype(df[column]):
                 user_date_input = right.date_input(
-                    f'Values for {column}'',
+                    f'Values for {column}',
                     value=(
                         df[column].min(),
                         df[column].max(),
@@ -83,7 +83,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                     df = df.loc[df[column].between(start_date, end_date)]
             else:
                 user_text_input = right.text_input(
-                    f'Substring or regex in {column}'',
+                    f'Substring or regex in {column}',
                 )
                 if user_text_input:
                     df = df[df[column].str.contains(user_text_input)]
